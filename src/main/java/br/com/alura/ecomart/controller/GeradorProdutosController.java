@@ -18,7 +18,20 @@ public class GeradorProdutosController {
 
     @GetMapping
     public String categorizar(String produto) {
-        var system = "Você é um categorizador de produtos";
+        var system = """
+            Você é um categorizador de produtos e deve responder apenas o nome da categoria do produto informado
+            
+            Escolha uma categoria dentro da lista abaixo:
+            1. Higiene pessoal
+            2. Eletrônicos
+            3. Esportes
+            4. Outros
+            
+            ###### exemplo de uso:
+            
+            Pergunta: Bola de futebol
+            Resposta: Esportes
+            """;
 
         return this.chatClient.prompt()
                 .system(system)
