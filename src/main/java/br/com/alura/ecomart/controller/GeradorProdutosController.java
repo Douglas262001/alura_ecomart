@@ -1,12 +1,13 @@
 package br.com.alura.ecomart.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.prompt.ChatOptionsBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("gerador")
+@RequestMapping("categorizador")
 public class GeradorProdutosController {
 
     private final ChatClient chatClient;
@@ -16,11 +17,15 @@ public class GeradorProdutosController {
     }
 
     @GetMapping
-    public String gerarProdutos() {
-        var pergunta = "Gere 5 produtos ecologicos";
+    public String categorizar(String produto) {
+        var system = "Você é um categorizador de produtos";
 
         return this.chatClient.prompt()
-                .user(pergunta)
+                .system(system)
+                .user(produto)
+                .options(ChatOptionsBuilder.builder()
+                        .withTemperature(0.85)
+                        .build())
                 .call()
                 .content();
     }
