@@ -13,7 +13,11 @@ public class GeradorProdutosController {
     private final ChatClient chatClient;
 
     public GeradorProdutosController(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder.build();
+        this.chatClient = chatClientBuilder
+                .defaultOptions(ChatOptionsBuilder.builder()
+                        .withModel("gpt-4o-mini")
+                        .build())
+                .build();
     }
 
     @GetMapping
@@ -38,6 +42,7 @@ public class GeradorProdutosController {
                 .user(produto)
                 .options(ChatOptionsBuilder.builder()
                         .withTemperature(0.85)
+//                        .withModel("gpt-4o-mini") trocar modelo no método
                         .build())
                 .call()
                 .content();
